@@ -1,0 +1,32 @@
+{
+  "name": "auth-component",
+  "version": "0.1.0",
+  "description": "An Authenication Component for DoneJS",
+  "main": "src/auth-component.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://marshallswain@github.com/marshallswain/auth-component"
+  },
+  "keywords": [
+    "DoneJS",
+    "Authentication"
+  ],
+  "author": "Marshall Thompson",
+  "license": "MIT",
+  "system": {
+    "main": "auth-component",
+    "npmIgnore": [
+      "documentjs"
+    ],
+    "directories": {
+      "lib": "lib"
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/marshallswain/auth-component/issues"
+  },
+  "homepage": "https://github.com/marshallswain/auth-component"
+}
