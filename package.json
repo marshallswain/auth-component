@@ -4,7 +4,11 @@
   "description": "An Authenication Component for DoneJS",
   "main": "src/auth-component.js",
   "scripts": {
-    "test": "npm run test"
+    "test": "npm run test",
+    "publish": "git push origin --tags",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish"
   },
   "repository": {
     "type": "git",
