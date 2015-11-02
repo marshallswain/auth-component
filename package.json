@@ -22,7 +22,7 @@
       "documentjs"
     ],
     "directories": {
-      "lib": "lib"
+      "lib": "src"
     }
   },
   "bugs": {

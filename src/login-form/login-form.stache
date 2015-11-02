@@ -1,0 +1,17 @@
+<div class="vertical-center">
+  <div class="form-wrapper">
+
+    <form class="pure-form pure-g">
+      <fieldset class="pure-group">
+        <input type="email" class="pure-input-1" placeholder="Email Address" {($value)}="username">
+        <input type="password" class="pure-input-1" placeholder="Password" {($value)}="password">
+      </fieldset>
+
+      <button type="button" class="pure-button pure-input-1 pure-button-primary" 
+          ($click)="login(username, password)">
+          Sign in
+      </button>
+    </form>
+
+  </div>
+</div>

@@ -10,22 +10,48 @@ export const ViewModel = Map.extend({
 
     token: {
       get(){
-        var location = this.viewModel.attr('keyLocation');
-        return this.viewModel.attr('rememberMe') ? localStorage.getItem(location) : sessionStorage.getItem(location);
+        var token, location = this.attr('keyLocation');
+        if (this.attr('rememberMe') && window.localStorage) {
+          token = window.localStorage.getItem(location);
+        } else if(window.sessionStorage) {
+          token = window.sessionStorage.getItem(location);  
+        }
+        return token;
+      },
+
+      /**
+       * Writes the token to either sessionStorage or localStorage depending on 
+       * if rememberMe is enabled.
+       * @param {token} the token passed from the auth attr.
+       */
+      set(val){
+        var location = this.attr('keyLocation');
+        if (this.attr('rememberMe') && window.localStorage) {
+          window.localStorage.setItem(location, val);
+        } else if(window.sessionStorage) {
+          window.sessionStorage.setItem(location, val);  
+        }
+        return val;
       }
     },
 
-    auth: {
-      get(lastSetVal, setVal){
-        return lastSetVal;
-      }
-    },
-
-    
     /**
-     * This will cause the auth token to be stored in localStorage instead of 
+     * auth will either be an object containing `token` and `data` attributes, or it will be `false`.
+     * @type {Object or Boolean}
+     */
+    auth: {
+      set(val){
+        if (val.token) {
+          this.attr('token', val.token);
+        }
+        return val;
+      }
+    },
+
+    /**
+     * When enabled, rememberMe will store the auth token in localStorage instead of 
      * sessionStorage (so that it persists between sessions).
-     * @type {String}
+     * @type {Boolean}
      */
     rememberMe: {
       set(val){
@@ -49,14 +75,42 @@ export const ViewModel = Map.extend({
    */
   keyLocation: null,
 
-  login(params){
+  login(username, password){
+    var self = this, params = {};
+    params[this.attr('usernameField')] = username;
+    params[this.attr('passwordField')] = password;
+    this.sendLogin(params).then(function(response){
+      // console.log('login response: ', response);
+      self.attr('auth', response);
+    });
+  },
+
+  tokenLogin(params){
+    var self = this;
+    this.sendLogin(params).then(function(response){
+      // console.log('tokenLogin response: ', response);
+      self.attr('auth', response);
+    });
+  },
+
+  usernameField: 'username',
+  passwordField: 'password',
+
+  sendLogin(params){
+    var self = this;
     return $.ajax({
       method: 'POST',
       contentType: 'application/json',
-      url: this.attr('loginEndpoint'),
+      url: self.attr('loginEndpoint'),
       data: JSON.stringify(params)
     });
-  }
+  },
+
+  /**
+   * Toggles a loading indicator until it's decided if the login form should show or not.
+   * @type {Boolean}
+   */
+  loading: true
 
 });
 
@@ -65,12 +119,17 @@ export default Component.extend({
   viewModel: ViewModel,
   template,
   events: {
+    /**
+     * On init, check for a token.  If one exists, try to login, otherwise,
+     * show the login form to the user.
+     */
     init(){
+      // Try to login with token.
       var token = this.viewModel.attr('token');
       if (token) {
-        this.viewModel.login({token:token}).then(function(data){
-          console.log(data);
-        });
+        this.viewModel.tokenLogin({token: token});
+      } else if (window.localStorage) {
+        this.viewModel.attr('loading', false);
       }
     }
   }

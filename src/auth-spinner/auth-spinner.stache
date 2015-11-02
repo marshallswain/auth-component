@@ -1,0 +1,4 @@
+<div class="vertical-center">
+  <p>Loading</p>
+  <img src="/img/auth-spinner.gif" alt="">
+</div>
