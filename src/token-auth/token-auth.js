@@ -44,7 +44,7 @@ export const ViewModel = Map.extend({
         if (val.token) {
           this.attr('token', val.token);
         }
-        return val;
+        return val.data;
       }
     },
 
@@ -75,11 +75,15 @@ export const ViewModel = Map.extend({
    */
   keyLocation: null,
 
+  responseTokenPath: 'token',
+  responseDataPath: 'data',
+
   login(username, password){
     var self = this, params = {};
     params[this.attr('usernameField')] = username;
     params[this.attr('passwordField')] = password;
     this.sendLogin(params).then(function(response){
+      // Check for responseTokenPath and responseDataPath.
       // console.log('login response: ', response);
       self.attr('auth', response);
     });
@@ -88,6 +92,7 @@ export const ViewModel = Map.extend({
   tokenLogin(params){
     var self = this;
     this.sendLogin(params).then(function(response){
+      // Check for responseTokenPath and responseDataPath.
       // console.log('tokenLogin response: ', response);
       self.attr('auth', response);
     });
