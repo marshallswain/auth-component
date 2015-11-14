@@ -105,7 +105,11 @@ export const ViewModel = Map.extend({
     var self = this;
     return $.ajax({
       method: 'POST',
-      contentType: 'application/json',
+      headers: {
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'   
+      },
+      dataType: 'application/json',
       url: self.attr('loginEndpoint'),
       data: JSON.stringify(params)
     });
