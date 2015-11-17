@@ -103,14 +103,15 @@ export const ViewModel = Map.extend({
 
   sendLogin(params){
     var self = this;
+    // Login Admin by email (POST http://api.mma.dev:8080/login)
     return $.ajax({
+      url: self.attr('loginEndpoint'),
       method: 'POST',
       headers: {
         'Accept' : 'application/json',
         'Content-Type': 'application/json'   
       },
-      dataType: 'application/json',
-      url: self.attr('loginEndpoint'),
+      contentType: 'application/json',
       data: JSON.stringify(params)
     });
   },
