@@ -79,13 +79,34 @@ export const ViewModel = Map.extend({
   responseDataPath: 'data',
 
   login(username, password){
-    var self = this, params = {};
+    var self = this;
+
+    this.attr('loggingIn', true);
+    this.attr('loginError', false);
+
+    var params = {};
     params[this.attr('usernameField')] = username;
     params[this.attr('passwordField')] = password;
-    this.sendLogin(params).then(function(response){
+
+    self.sendLogin(params).then(function(response){
+      self.attr('loggingIn', false);
       // Check for responseTokenPath and responseDataPath.
-      // console.log('login response: ', response);
       self.attr('auth', response);
+
+    }, function(error){
+      self.attr('loggingIn', false);
+
+      var response = error.responseJSON;
+      if (response) {
+        switch(response.code){
+          case 401:
+            var message = response.message || self.attr('loginErrorMessage');
+            setTimeout(function(){
+              self.attr('loginError', message);
+            }, 10);
+            break;
+        }
+      }
     });
   },
 
@@ -98,8 +119,13 @@ export const ViewModel = Map.extend({
     });
   },
 
+  loggingIn: false,
+
   usernameField: 'username',
   passwordField: 'password',
+
+  loginErrorMessage: 'Invalid Login',
+  loginErrorClass: 'shake',
 
   sendLogin(params){
     var self = this;

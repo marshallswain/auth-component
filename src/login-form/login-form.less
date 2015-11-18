@@ -19,15 +19,44 @@ login-form {
       border-radius: 3px;
       width: 280px;
       margin: 0 auto;
+      padding-top: 15px;
+      -webkit-animation-duration: 500ms;
+      animation-duration: 500ms;
+
+      p.login-error-message {
+        padding: 0px 0 6px 0;
+        margin: -5px 0 0 0;
+        color: red;
+        display: block;
+        letter-spacing: initial;
+        text-align: center;
+        width: 100%;
+      }
+
+      &.shake {
+        -webkit-animation-name: shake;
+        animation-name: shake;
+
+        @keyframes shake {
+          0%, 100% {transform: translateX(0);}
+          15%, 60%, 90% {transform: translateX(-10px);}
+          45%, 75% {transform: translateX(10px);}
+        }
+        @-webkit-keyframes shake {
+          0%, 100% {transform: translateX(0);}
+          15%, 60%, 90% {transform: translateX(-10px);}
+          45%, 75% {transform: translateX(10px);}
+        }
+      }
 
       form {
-        padding: 14px 20px;
+        padding: 0 20px 14px 20px;
         text-align: center;
 
         fieldset {
           width: 100%;
         }
-      }  
+      }
     }
   }
 }
