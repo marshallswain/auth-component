@@ -5,8 +5,7 @@ import './auth-spinner.less!';
 import template from './auth-spinner.stache!';
 
 export const ViewModel = Map.extend({
-  define: {
-  }
+  type: 'bar'
 });
 
 export default Component.extend({
