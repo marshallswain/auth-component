@@ -1,6 +1,6 @@
 {
   "name": "auth-component",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "An Authenication Component for DoneJS",
   "main": "src/auth-component.js",
   "scripts": {
