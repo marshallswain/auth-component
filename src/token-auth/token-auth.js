@@ -97,6 +97,7 @@ export const ViewModel = Map.extend({
       // Check for responseTokenPath and responseDataPath.
       self.attr('auth', response);
 
+    // Couldn't login with username / password.
     }, function(error){
       self.attr('loggingIn', false);
 
@@ -117,9 +118,13 @@ export const ViewModel = Map.extend({
   tokenLogin(params){
     var self = this;
     this.sendLogin(params).then(function(response){
-      // Check for responseTokenPath and responseDataPath.
-      // console.log('tokenLogin response: ', response);
+      // TODO: Check for responseTokenPath and responseDataPath.
       self.attr('auth', response);
+
+    // Couldn't login with broken or expired token. Discard the token.
+    }, function(){
+      self.attr('loading', false);
+      self.removeStoredToken(self.attr('rememberMe'), self.attr('keyLocation'));
     });
   },
 
@@ -144,6 +149,20 @@ export const ViewModel = Map.extend({
       contentType: 'application/json',
       data: JSON.stringify(params)
     });
+  },
+
+  /**
+   * Removes the auth token from either sessionStorage or localStorage.
+   * @param  {Bookean} rememberMe If true, the token is in localStorage, 
+   *                              otherwise, it's in sessionStorage
+   * @param  {String} location   The key name of the location in storage.
+   */
+  removeStoredToken(rememberMe, location){
+    if (rememberMe) {
+      window.localStorage.removeItem(location);
+    } else if(window.sessionStorage) {
+      window.sessionStorage.removeItem(location);  
+    }
   },
 
   /**
