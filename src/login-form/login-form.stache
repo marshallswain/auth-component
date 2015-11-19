@@ -4,7 +4,17 @@
     <form class="pure-form pure-g" ($submit)="login(username, password, %event)">
   
       <fieldset class="pure-group">
-        <input type="email" class="pure-input-1" placeholder="Email Address" {($value)}="username">
+        {{#switch usernameType}}
+          {{#case 'username'}}
+            <input type="text" class="pure-input-1" placeholder="Username" {($value)}="username">
+          {{/case}}
+          {{#case 'email'}}
+            <input type="email" class="pure-input-1" placeholder="Email Address" {($value)}="username">
+          {{/case}}
+          {{#case 'phone'}}
+            <input type="tel" class="pure-input-1" placeholder="Phone Number" {($value)}="username">
+          {{/case}}
+        {{/switch}}
         <input type="password" class="pure-input-1" placeholder="Password" {($value)}="password">
       </fieldset>
 

@@ -57,6 +57,24 @@ export const ViewModel = Map.extend({
       set(val){
         return val !== undefined;
       }
+    },
+
+    usernameType: {
+      get(){
+        var type;
+        switch(this.attr('usernameField')){
+          case 'email':
+            type = 'email';
+            break;
+          case 'phone':
+            type = 'phone';
+            break;
+          default:
+            type = 'username';
+            break;
+        }
+        return type;
+      }
     }
 
   },
