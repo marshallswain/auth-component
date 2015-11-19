@@ -78,8 +78,12 @@ export const ViewModel = Map.extend({
   responseTokenPath: 'token',
   responseDataPath: 'data',
 
-  login(username, password){
+  login(username, password, ev){
     var self = this;
+
+    if (ev) {
+      ev.preventDefault();
+    }
 
     this.attr('loggingIn', true);
     this.attr('loginError', false);

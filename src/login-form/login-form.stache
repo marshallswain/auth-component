@@ -1,7 +1,7 @@
 <div class="vertical-center">
   <div class="form-wrapper {{#if loginError}}{{loginErrorClass}}{{/if}}">
 
-    <form class="pure-form pure-g">
+    <form class="pure-form pure-g" ($submit)="login(username, password, %event)">
   
       <fieldset class="pure-group">
         <input type="email" class="pure-input-1" placeholder="Email Address" {($value)}="username">
@@ -15,7 +15,7 @@
         {{/if}}
       </p>
 
-      <button type="button" class="pure-button pure-input-1 pure-button-primary" 
+      <button type="submit" class="pure-button pure-input-1 pure-button-primary" 
           ($click)="login(username, password)">
           {{#if loggingIn}}
             <img src="data:image/gif;base64,R0lGODlhKwALAPEAAP///6SkpNLS0qSkpCH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAKwALAAACMoSOCMuW2diD88UKG95W88uF4DaGWFmhZid93pq+pwxnLUnXh8ou+sSz+T64oCAyTBUAACH5BAkKAAAALAAAAAArAAsAAAI9xI4IyyAPYWOxmoTHrHzzmGHe94xkmJifyqFKQ0pwLLgHa82xrekkDrIBZRQab1jyfY7KTtPimixiUsevAAAh+QQJCgAAACwAAAAAKwALAAACPYSOCMswD2FjqZpqW9xv4g8KE7d54XmMpNSgqLoOpgvC60xjNonnyc7p+VKamKw1zDCMR8rp8pksYlKorgAAIfkECQoAAAAsAAAAACsACwAAAkCEjgjLltnYmJS6Bxt+sfq5ZUyoNJ9HHlEqdCfFrqn7DrE2m7Wdj/2y45FkQ13t5itKdshFExC8YCLOEBX6AhQAADsAAAAAAAAAAAA=" />
